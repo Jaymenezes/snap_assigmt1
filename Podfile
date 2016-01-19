@@ -3,8 +3,8 @@
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-target 'movie_viewer' do
-    pod 'AFNetworking', '~> 3.0'
-
+target ‘movie_viewer’ do
+pod 'AFNetworking'
 end
+
 

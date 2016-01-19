@@ -10,6 +10,8 @@ import UIKit
 import AFNetworking
 
 
+
+
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -83,7 +85,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             cell.posterView.setImageWithURL(posterUrl!)
         }
         else {
+            // No poster image. Can either set to nil (no image) or a default movie poster image
+            // that you include as an asset
             cell.posterView.image = nil
+        
         }
         
         cell.titleLabel.text = title
