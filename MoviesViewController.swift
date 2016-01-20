@@ -19,30 +19,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     var movies: [NSDictionary]?
-    
-    
-    func loadDataFromNetwork() {
-        
-        // Display HUD right before next request is made
-        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        
-        // ...
-        
-        let task : NSURLSessionDataTask = mySession.dataTaskWithRequest(request,
-            completionHandler: { (data, response, error) in
-                
-                // Hide HUD once network request comes back (must be done on main UI thread)
-                MBProgressHUD.hideHUDForView(self.view, animated: true)
-                
-                // ...
-                
-        });
-        task.resume()
-    }
+   
+ 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialize a UIRefreshControl
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
+    
+        
+        
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -59,18 +50,29 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             delegateQueue:NSOperationQueue.mainQueue()
         )
         
+        
+        
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+
+        
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
             completionHandler: { (dataOrNil, response, error) in
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            print("response: \(responseDictionary)")
+                            print("response: data fetched")
                             
-                            self.movies = responseDictionary ["results"] as! [NSDictionary]
+                            self.movies = responseDictionary ["results"] as? [NSDictionary]
                             self.tableView.reloadData()
+                            
+     
+        MBProgressHUD.hideHUDForView(self.view, animated: true)
+                            
+
                             
                     }
                 }
+                
         });
         task.resume()
         
@@ -123,7 +125,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         print("row \(indexPath.row)")
         return cell
         
+        
+            // Make network request to fetch latest data
+            
+            // Do the following when the network request comes back successfully:
+            // Update tableView data source
+
+        }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        // Make network request to fetch latest data
+        
+        // Do the following when the network request comes back successfully:
+        // Update tableView data source
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+        print("refresh function")
     }
+    
+        
+    }
+
     
     
     
@@ -139,4 +162,4 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     */
 
-}
+
