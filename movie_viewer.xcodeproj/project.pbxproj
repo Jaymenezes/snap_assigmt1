@@ -19,6 +19,7 @@
 /* Begin PBXFileReference section */
 		893F3F414913D9E4F66524BE /* Pods-movie_viewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-movie_viewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-movie_viewer/Pods-movie_viewer.release.xcconfig"; sourceTree = "<group>"; };
 		AB63224FD0B1DDFB0785AB02 /* Pods_movie_viewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_movie_viewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6D9DDA1C4F0A5B008ECC08 /* loading */ = {isa = PBXFileReference; lastKnownFileType = file; name = loading; path = Assets.xcassets/AppIcon.appiconset/loading; sourceTree = "<group>"; };
 		CE9F7AC21C49A20E001926B0 /* movie_viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movie_viewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9F7AC51C49A20E001926B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE9F7ACA1C49A20E001926B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,6 +60,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE6D9DDC1C4F11AA008ECC08 /* view controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE9F7AD71C49A268001926B0 /* MoviesViewController.swift */,
+			);
+			name = "view controllers";
+			sourceTree = "<group>";
+		};
 		CE9F7AB91C49A20E001926B0 = {
 			isa = PBXGroup;
 			children = (
@@ -80,13 +89,14 @@
 		CE9F7AC41C49A20E001926B0 /* movie_viewer */ = {
 			isa = PBXGroup;
 			children = (
-				CE9F7ADC1C49B9E9001926B0 /* view controller */,
+				CE6D9DDC1C4F11AA008ECC08 /* view controllers */,
 				CE9F7AD91C49B995001926B0 /* Views */,
 				CE9F7AC51C49A20E001926B0 /* AppDelegate.swift */,
 				CE9F7AC91C49A20E001926B0 /* Main.storyboard */,
 				CE9F7ACC1C49A20E001926B0 /* Assets.xcassets */,
 				CE9F7ACE1C49A20E001926B0 /* LaunchScreen.storyboard */,
 				CE9F7AD11C49A20E001926B0 /* Info.plist */,
+				CE6D9DDA1C4F0A5B008ECC08 /* loading */,
 			);
 			path = movie_viewer;
 			sourceTree = "<group>";
@@ -97,14 +107,6 @@
 				CE9F7ADA1C49B9DD001926B0 /* MovieCell.swift */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		CE9F7ADC1C49B9E9001926B0 /* view controller */ = {
-			isa = PBXGroup;
-			children = (
-				CE9F7AD71C49A268001926B0 /* MoviesViewController.swift */,
-			);
-			name = "view controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
