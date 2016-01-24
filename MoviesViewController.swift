@@ -29,7 +29,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Snap"
         searchBar.delegate = self
+    
 
     
         
