@@ -14,11 +14,14 @@ import MBProgressHUD
 
 
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
 
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var movies: [NSDictionary]?
+    var filteredData: [NSDictionary]!
+    
    
  
     
@@ -26,7 +29,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize a UIRefreshControl
+        searchBar.delegate = self
+
+    
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
@@ -50,8 +55,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             delegateQueue:NSOperationQueue.mainQueue()
         )
         
-        
-        
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 
         
@@ -63,13 +66,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                             print("response: data fetched")
                             
                             self.movies = responseDictionary ["results"] as? [NSDictionary]
-                            self.tableView.reloadData()
+                            self.filteredData = self.movies
+                           
                             
      
         MBProgressHUD.hideHUDForView(self.view, animated: true)
                             
+                             self.tableView.reloadData()
 
-                            
                     }
                 }
                 
@@ -86,9 +90,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let movies = movies {
+        if let movies = filteredData {
              return movies.count
         }else{
             return 0
@@ -100,7 +105,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("movieCell", forIndexPath: indexPath) as! MovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredData![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         
@@ -110,8 +115,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             cell.posterView.setImageWithURL(posterUrl!)
         }
         else {
-            // No poster image. Can either set to nil (no image) or a default movie poster image
-            // that you include as an asset
+           
             cell.posterView.image = nil
         
         }
@@ -144,6 +148,34 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         print("refresh function")
     }
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredData = movies
+        } else {
+            filteredData = movies?.filter({ (movie: NSDictionary) -> Bool in
+                if let title = movie["title"] as? String {
+                    if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                        
+                        return  true
+                    } else {
+                        return false
+                    }
+                }
+                return false
+            })
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
         
     }
 
