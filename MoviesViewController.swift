@@ -177,14 +177,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.resignFirstResponder()
-    }
+        self.filteredData = self.movies
+        self.tableView.reloadData()
+        self.searchBar.hidden = true
         
     }
+       }
 
-    
-    
-    
-    
+
+
+
+
 
     /*
     // MARK: - Navigation

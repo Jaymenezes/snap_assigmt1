@@ -69,7 +69,6 @@
 			children = (
 				CE9F7AD71C49A268001926B0 /* MoviesViewController.swift */,
 				CECD20D41C55634B004E945D /* CollectionViewController.swift */,
-				CECD20D61C556A09004E945D /* MovieCollectionCell.swift */,
 			);
 			name = "view controllers";
 			sourceTree = "<group>";
@@ -111,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9F7ADA1C49B9DD001926B0 /* MovieCell.swift */,
+				CECD20D61C556A09004E945D /* MovieCollectionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
