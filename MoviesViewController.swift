@@ -175,28 +175,33 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        searchBar.text = ""
+        searchBar.text = "find your movie"
         searchBar.resignFirstResponder()
         self.filteredData = self.movies
         self.tableView.reloadData()
         self.searchBar.hidden = true
+        }
+        
+    
+        
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("test")
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+            
+            
+            
+        
+
         
     }
        }
 
 
 
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 
