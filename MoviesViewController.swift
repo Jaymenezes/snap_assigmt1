@@ -31,7 +31,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Snap"
+       
         searchBar.delegate = self
     
 
@@ -190,7 +190,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         print("test")
         let cell = sender as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)
-        let movie = movies![indexPath!.row]
+        let movie = filteredData[indexPath!.row]
+        
         
         let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.movie = movie
