@@ -5,8 +5,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target ‘movie_viewer’ do
-pod 'AFNetworking'
-pod 'MBProgressHUD'
+    pod 'AFNetworking'
+    pod 'MBProgressHUD'
 end
 
 

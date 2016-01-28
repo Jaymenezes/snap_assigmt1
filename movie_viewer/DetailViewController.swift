@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DetailViewController: UIViewController {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

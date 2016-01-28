@@ -143,10 +143,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
-        // Make network request to fetch latest data
-        
-        // Do the following when the network request comes back successfully:
-        // Update tableView data source
+    
         self.tableView.reloadData()
         refreshControl.endRefreshing()
         print("refresh function")
@@ -187,15 +184,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
         
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("test")
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPathForCell(cell)
-        let movie = filteredData[indexPath!.row]
+//        print("test")
+//        let cell = sender as! UITableViewCell
+//        let indexPath = tableView.indexPathForCell(cell)
+//        let movie = movies![indexPath!.row]
+//        
+//        let detailViewController = segue.destinationViewController as! DetailViewController
+//        detailViewController.movie = movie
         
-        
-        let detailViewController = segue.destinationViewController as! DetailViewController
-        detailViewController.movie = movie
-            
             
             
         
