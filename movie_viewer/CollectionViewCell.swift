@@ -12,5 +12,6 @@ class CollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var posterView: UIImageView!
     
+    @IBOutlet weak var titleLabel: UILabel!
     
 }

@@ -12,6 +12,7 @@ import UIKit
 
 
 
+
 class MoviesCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
 
@@ -28,6 +29,12 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionTableView.dataSource = self
+        collectionTableView.delegate = self
+        searchBar.delegate = self
+        
+        
         
         
         
@@ -73,14 +80,14 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
                         return 0
                     }
         
-        
     }
     
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionTableView.dequeueReusableCellWithReuseIdentifier("MoviesCollectionView", forIndexPath: indexPath) as! CollectionViewCell
+        let cell = collectionTableView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
         let movie = filteredData![indexPath.item]
+  
  
         
         if let posterPath = movie["poster_path"] as? String {
@@ -98,74 +105,63 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         print("item \(indexPath.item)")
         return cell
             }
+
+    func refreshControlAction(refreshControl: UIRefreshControl) {
         
+        // Make network request to fetch latest data
         
-    
+        // Do the following when the network request comes back successfully:
+        // Update tableView data source
+        self.collectionTableView.reloadData()
+        refreshControl.endRefreshing()
+        print("refresh function")
+    }
+
     
 
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredData = movies
+        } else {
+            filteredData = movies?.filter({ (movie: NSDictionary) -> Bool in
+                if let title = movie["title"] as? String {
+                    if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                        
+                        return  true
+                    } else {
+                        return false
+                    }
+                }
+                return false
+            })
+        }
+        collectionTableView.reloadData()
+    }
     
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = "find your movie"
+        searchBar.resignFirstResponder()
+        self.filteredData = self.movies
+        self.collectionTableView.reloadData()
+        self.searchBar.hidden = true
+    }
 
-
-//    
-//    
-//  
-//
-//    func refreshControlAction(refreshControl: UIRefreshControl) {
-//        
-//        // Make network request to fetch latest data
-//        
-//        // Do the following when the network request comes back successfully:
-//        // Update tableView data source
-//        self.collectionTableView.reloadData()
-//        refreshControl.endRefreshing()
-//        print("refresh function")
-//    }
-//    
-//    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            filteredData = movies
-//        } else {
-//            filteredData = movies?.filter({ (movie: NSDictionary) -> Bool in
-//                if let title = movie["title"] as? String {
-//                    if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
-//                        
-//                        return  true
-//                    } else {
-//                        return false
-//                    }
-//                }
-//                return false
-//            })
-//        }
-//        collectionTableView.reloadData()
-//    }
-//    
-//    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-//        self.searchBar.showsCancelButton = true
-//    }
-//    
-//    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-//        searchBar.showsCancelButton = false
-//        searchBar.text = "find your movie"
-//        searchBar.resignFirstResponder()
-//        self.filteredData = self.movies
-//        self.collectionTableView.reloadData()
-//        self.searchBar.hidden = true
-//    }
-//    
-//    
-//    
+    
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        print("test")
-
-        
-        
-        
-        
-        
 //        
+//        let cell = sender as! UICollectionViewCell
+//        let indexPath = collectionTableView.indexPathForCell(cell)
+//        let movie = movies![indexPath!.item]
 //        
+//        let detailViewController = segue.destinationViewController as! DetailViewController
+//        detailViewController.movie = movie
+//     
 //    }
 }
 
