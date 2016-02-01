@@ -13,6 +13,7 @@ import UIKit
 
 
 
+
 class MoviesCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
 
@@ -21,7 +22,7 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
     @IBOutlet weak var searchBar: UISearchBar!
     
     var movies: [NSDictionary]?
-    var filteredData: [NSDictionary]?
+    var filteredData: [NSDictionary]!
     let refreshControl = UIRefreshControl()
     
     
@@ -33,7 +34,6 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         collectionTableView.dataSource = self
         collectionTableView.delegate = self
         searchBar.delegate = self
-        
         
         
         
@@ -74,8 +74,8 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
-        if let movies = movies{
-                        return movies.count
+        if let filteredData = filteredData{
+                        return filteredData.count
                     } else {
                         return 0
                     }
@@ -112,6 +112,8 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         // Do the following when the network request comes back successfully:
         // Update tableView data source
+        
+        
         self.collectionTableView.reloadData()
         refreshControl.endRefreshing()
         print("refresh function")
@@ -153,15 +155,17 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
     }
 
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//        let cell = sender as! UICollectionViewCell
-//        let indexPath = collectionTableView.indexPathForCell(cell)
-//        let movie = movies![indexPath!.item]
-//        
-//        let detailViewController = segue.destinationViewController as! DetailViewController
-//        detailViewController.movie = movie
-//     
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionTableView.indexPathForCell(cell)
+        let movie = movies![indexPath!.item]
+        
+        collectionTableView.deselectItemAtIndexPath(indexPath!, animated: true)
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+     
+    }
 }
 

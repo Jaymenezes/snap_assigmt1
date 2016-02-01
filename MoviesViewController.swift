@@ -33,6 +33,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
        
         searchBar.delegate = self
+        
     
 
     
@@ -40,6 +41,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
+        
+        
     
         
         
@@ -180,25 +183,43 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         self.tableView.reloadData()
         self.searchBar.hidden = false
         }
+    
+
         
     
         
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("test")
-//        let cell = sender as! UITableViewCell
-//        let indexPath = tableView.indexPathForCell(cell)
-//        let movie = movies![indexPath!.row]
+        print("segue identifier:")
+        print(segue.identifier);
+        
+        
+        
+        if(segue.identifier == "toDetails") {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let movie = movies![indexPath!.row]
+            
+            tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            detailViewController.movie = movie
+            
+
+                }
+            }
+        }
 //        
-//        let detailViewController = segue.destinationViewController as! DetailViewController
-//        detailViewController.movie = movie
-//        
+//        if(segue = collectionSegue) {
 //            
+//        }
+        
+            
         
         
 
         
-    }
-       }
+
+
 
 
 
