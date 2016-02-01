@@ -126,7 +126,7 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         if searchText.isEmpty {
             filteredData = movies
         } else {
-            filteredData = movies?.filter({ (movie: NSDictionary) -> Bool in
+            filteredData = filteredData?.filter({ (movie: NSDictionary) -> Bool in
                 if let title = movie["title"] as? String {
                     if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
                         
@@ -151,7 +151,7 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         searchBar.resignFirstResponder()
         self.filteredData = self.movies
         self.collectionTableView.reloadData()
-        self.searchBar.hidden = true
+        self.searchBar.hidden = false
     }
 
     
@@ -159,7 +159,7 @@ class MoviesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         let cell = sender as! UICollectionViewCell
         let indexPath = collectionTableView.indexPathForCell(cell)
-        let movie = movies![indexPath!.item]
+        let movie = filteredData![indexPath!.item]
         
         collectionTableView.deselectItemAtIndexPath(indexPath!, animated: true)
         

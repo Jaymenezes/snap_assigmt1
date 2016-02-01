@@ -34,6 +34,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
        
         searchBar.delegate = self
         
+        
     
 
     
@@ -86,6 +87,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 
         });
         task.resume()
+        
         
         
         
@@ -156,7 +158,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         if searchText.isEmpty {
             filteredData = movies
         } else {
-            filteredData = movies?.filter({ (movie: NSDictionary) -> Bool in
+            filteredData = filteredData?.filter({ (movie: NSDictionary) -> Bool in
                 if let title = movie["title"] as? String {
                     if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
                         
@@ -183,6 +185,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         self.tableView.reloadData()
         self.searchBar.hidden = false
         }
+
+    
     
 
         
@@ -197,7 +201,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         if(segue.identifier == "toDetails") {
             let cell = sender as! UITableViewCell
             let indexPath = tableView.indexPathForCell(cell)
-            let movie = movies![indexPath!.row]
+            let movie = filteredData![indexPath!.row]
             
             tableView.deselectRowAtIndexPath(indexPath!, animated: true)
         
